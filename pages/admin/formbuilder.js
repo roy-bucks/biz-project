@@ -1,19 +1,44 @@
-import React from "react";
-import {
-  InfoCircleOutlined,
-  TagOutlined,
-  PlusOutlined,
-  FileTextOutlined,
-  NumberOutlined, 
-  CheckSquareOutlined, 
-  DownCircleOutlined, 
-  CalendarOutlined, 
-  ClockCircleOutlined
-} from "@ant-design/icons";
-import { Input, Tooltip, Select } from "antd";
+import { React, useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
 import Admin from "layouts/Admin.js";
+import FormBlock from "components/Form/Block";
 
 export default function Formbuilder() {
+  const [blockCount, setBlockCount] = useState([1]);
+
+  const form = [
+    {
+      id :  "", 
+      type: "", //type of input form
+      label: "", //label of the input
+      opt: "", //array of the option | null value if thr form is not supported
+    },
+  ];
+
+  const inputSelection = (value, key) => {
+    console.log("key => ", value);
+
+    //search the key and replace the type value
+  };
+
+
+  const labelChange = (value, key) => {
+    console.log("value => ", value); 
+
+    //search the key and replace the label value
+  }
+
+
+  const addBlock = () =>{
+
+    const lastIndexValue = blockCount[blockCount.length - 1];
+    blockCount.push(lastIndexValue + 1); 
+    setBlockCount(blockCount);
+    
+  }
+
+
+
   return (
     <>
       <div className="flex flex-wrap">
@@ -31,96 +56,19 @@ export default function Formbuilder() {
                   since the 1500s.{" "}
                 </p>
               </div>
+              {blockCount.map((val, index) => {
+                  return (
+                      <FormBlock  key={val} inputSelection={inputSelection} labelChange = {labelChange} />
+                  );
+              })}
 
-              <div className="mt-10 flex flex-row align-middle text-center">
-                <Input
-                  className="mr-2"
-                  placeholder="Label"
-                  prefix={<TagOutlined className="site-form-item-icon" />}
-                  suffix={
-                    <Tooltip title="Section Label">
-                      <InfoCircleOutlined
-                        style={{
-                          color: "rgba(0,0,0,.45)",
-                        }}
-                      />
-                    </Tooltip>
-                  }
-                />
-
-                <Select
-                  defaultValue="text"
-                  style={{
-                    width: 400,
-                  }}
-                  allowClear
-                  options={[
-                    {
-                      value: "text",
-                      label: (
-                        <>
-                          <FileTextOutlined className="mr-2" /> 
-                          Text
-                         </>
-                      )
-                    },
-                    {
-                      value: "number",
-                      label: (
-                        <>
-                          <NumberOutlined className="mr-2" />
-                          Number
-                        </>
-                      )
-                    }, 
-                    {
-                      value: "checkbox",
-                      label: (
-                        <>
-                          <CheckSquareOutlined  className="mr-2" />
-                          Checkbox
-                        </>
-                      )
-                    }, 
-                    {
-                      value: "drop-down",
-                      label: (
-                        <>
-                        <DownCircleOutlined  className="mr-2" />
-                        Drop-down
-                        </>
-
-                      )
-                    },
-                    {
-                      value: "date",
-                      label: (
-                        <>
-                        <CalendarOutlined  className="mr-2" />
-                        Date
-                        </>
-
-                      )
-                    }, 
-                    {
-                      value: "time",
-                      label: (
-                        <>
-                        <ClockCircleOutlined  className="mr-2" />
-                        Time
-                        </>
-
-                      )
-                    },
-                  ]}
-                />
-              </div>
 
               <button
-                className="bg-blueGray-700 mt-10  active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-4 rounded shadow hover:shadow-md outline-none  focus:outline-none mr-1 ease-linear transition-all duration-150 flex items-center align-middle"
+                className="bg-blueGray-700 mt-10  active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-3 rounded shadow hover:shadow-md outline-none  focus:outline-none mr-1 ease-linear transition-all duration-150 flex items-center align-middle"
                 type="button"
+                onClick = {()=> addBlock()}
               >
-                ADD FORM
+                ADD
                 <PlusOutlined className="ml-2 text-xs" />
               </button>
             </div>
